@@ -10,6 +10,7 @@ class Post(models.Model):
       likes = models.IntegerField(default=0)
       time_to_read = models.IntegerField(default=0)
       tags = models.ManyToManyField('Tag', related_name='post_set', null=True, blank=True)
+      category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
 
 
       def __str__(self):
@@ -20,7 +21,7 @@ class Author(models.Model):
       name = models.CharField(max_length=255)
       email = models.EmailField(max_length=100, unique=True)
       dob = models.DateField()
-      # profile_pic = models.ImageField()
+      profile_pic = models.ImageField(upload_to='author_pics', blank=True, null=True)
       # all_posts = models.ManyToManyField('Post', related_name='author_set' null=True, blank=True)
       favorites = models.ManyToManyField('Post', related_name='favorite_of_authors', null=True, blank=True)
 
@@ -41,6 +42,13 @@ class Comment(models.Model):
 
 class Tag(models.Model):
       name = models.CharField(max_length=100)
+
+      def __str__(self):
+            return str(self.name)
+
+
+class Category(models.Model):
+      name = models.CharField(max_length=255)
 
       def __str__(self):
             return str(self.name)
