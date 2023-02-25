@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Post(models.Model):
@@ -17,7 +18,7 @@ class Post(models.Model):
             return str(self.title)
 
 
-class Author(models.Model):
+class Author(User):
       name = models.CharField(max_length=255)
       email = models.EmailField(max_length=100, unique=True)
       dob = models.DateField()
