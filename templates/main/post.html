@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>First post about python</title>
+</head>
+<body>
+      Title : {{ post.title }} <br />
+      Author  : {{ post.author }} <br>
+      Content : {{ post.content }} <br>
+
+      <hr>
+      Comments :  <br>
+      {% for comment in comments %}
+            {{ comment }} - {{ comment.author }} ON {{ comment.parent }} <br>
+      {% endfor %}
+      <hr>
+      <form action="" method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" value="Submit">
+      </form>
+</body>
+</html>
