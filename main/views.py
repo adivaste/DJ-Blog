@@ -1,5 +1,7 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from main.forms import PostForm, CommentForm
+from django.shortcuts import render, HttpResponse, get_object_or_404, HttpResponseRedirect
+from main.forms import PostForm, CommentForm, SignUpForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from main.models import Post, Comment
 
 # Create your views here.
@@ -31,3 +33,34 @@ def createpost(request):
                   form.save()
                   return HttpResponse("Created broiiii!")
       return render(request, 'main/createpost.html', {"form" : PostForm})
+
+def signup(request):
+      if request.method == 'POST':
+            print(request.POST)
+            print(request.FILES)
+            form = SignUpForm(request.POST, request.FILES)
+            if form.is_valid():
+                  form.save()
+                  return HttpResponse("Registration done successfully!")
+      else:
+            form = SignUpForm()
+      return render(request, 'main/signup.html', {"form" : form})
+
+def user_login(request):
+      if request.method == 'POST':
+            form = AuthenticationForm(request=request, data=request.POST)
+            if form.is_valid():
+                  uname = form.cleaned_data['username']
+                  upass = form.cleaned_data['password']
+                  user = authenticate(username=uname, password=upass)
+                  if user is not None:
+                        login(request, user)
+                        return HttpResponseRedirect("/createpost")
+            
+      form  = AuthenticationForm()
+      return render(request, 'main/login.html',{ 'form' : form})
+
+
+def user_logout(request):
+      logout(request)
+      return HttpResponseRedirect("/login")

@@ -7,7 +7,7 @@
       <title>First post about python</title>
 </head>
 <body>
-      Title : {{ post.title }} <br />
+      Title : {{ post.title }} <br>
       Author  : {{ post.author }} <br>
       Content : {{ post.content }} <br>
 
@@ -17,10 +17,12 @@
             {{ comment }} - {{ comment.author }} ON {{ comment.parent }} <br>
       {% endfor %}
       <hr>
-      <form action="" method="post">
+      <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ comment_form.as_p }}
             <input type="submit" value="Submit">
       </form>
+
+      <a href="{% url 'logout' %}">Logout</a>
 </body>
 </html>
