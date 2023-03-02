@@ -1,3 +1,6 @@
+{% load static tailwind_tags %}
+{% load widget_tweaks %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +8,114 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Create post</title>
+      {% tailwind_css %}
+      <link rel="stylesheet" href="https://unpkg.com/tagin@2.0.2/dist/tagin.min.css">
+      <style>
+        .tagin-wrapper{
+          border: 1px solid #d1d5db;
+          outline: none !important;
+        }
+      </style>
+      
 </head>
 <body>
       Create a new post
       <form action="" method="post">
             {% csrf_token %}
+            <input type="color" name="name" id="">
+            <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
       {{ form.as_p }}
       <input type="submit" value="Submit">
       </form>
+
+
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+            <div class="mx-auto max-w-3xl">
+                  <form class="space-y-8 divide-y divide-gray-200">
+                        <div class="space-y-8 divide-y divide-gray-200">
+                          <div>
+
+                            <div>
+                              <h3 class="text-lg font-medium leading-6 text-gray-900">Post : </h3>
+                              <p class="mt-1 text-sm text-gray-500">Write your blog post here add title, content, tags and cover image.</p>
+                            </div>
+                      
+                            <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+
+                              <div class="sm:col-span-6">
+                                <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700">Blog Post Title</label>
+                                <div class="mt-1">
+                                  {% render_field form.title type="text" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %}
+                                </div>
+                              </div>
+
+                              <div class="sm:col-span-6">
+                                <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium text-gray-700">Tags</label>
+                                <div class="mt-1">
+                                  <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  {% render_field form.tags type="text" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %}
+                                </div>
+                              </div>
+
+                              <div class="sm:col-span-3">
+                                    <label for="country" class="block text-sm font-medium text-gray-700">Category</label>
+                                    <div class="mt-1">
+                                      <select id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                        <option>Science</option>
+                                        <option>Technology</option>
+                                        <option>Cooking</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                      
+                              <div class="sm:col-span-6">
+                                <label for="about" class="block text-sm font-medium text-gray-700">Content</label>
+                                <div class="mt-1">
+                                  <textarea id="about" name="about" rows="10" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                                </div>
+                                <p class="mt-2 text-sm text-gray-500">Write a blog post here.</p>
+                              </div>
+                      
+                              <div class="sm:col-span-6">
+                                <label for="cover-photo" class="block text-sm font-medium text-gray-700">Cover photo</label>
+                                <div class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                                  <div class="space-y-1 text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div class="flex text-sm text-gray-600">
+                                      <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                      </label>
+                                      <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="pt-5">
+                          <div class="flex justify-end">
+                            <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Into Draft</button>
+                            <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Publish</button>
+                          </div>
+                        </div>
+                      </form>
+            </div>
+          </div>
+          
+          
+
+<script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script>
+<script>
+const tagin = new Tagin(document.querySelector('.tagin'), {
+  separator: ' '
+})
+</script>
 </body>
 </html>

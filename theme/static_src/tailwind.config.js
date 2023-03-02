@@ -42,7 +42,11 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ['"PT Sans"', 'sans-serif']
+              }          
+        },
     },
     plugins: [
         /**
