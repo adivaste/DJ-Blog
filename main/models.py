@@ -18,16 +18,15 @@ class Post(models.Model):
             return str(self.title)
 
 
-class Author(User):
-      name = models.CharField(max_length=255)
-      email = models.EmailField(max_length=100, unique=True)
+class Author(models.Model):
+      user = models.OneToOneField(User, on_delete=models.CASCADE)
       dob = models.DateField()
       profile_pic = models.ImageField(upload_to='author_pics', blank=True, null=True)
-      # all_posts = models.ManyToManyField('Post', related_name='author_set' null=True, blank=True)
       favorites = models.ManyToManyField('Post', related_name='favorite_of_authors', null=True, blank=True)
+      # all_posts = models.ManyToManyField('Post', related_name='author_set' null=True, blank=True)
 
       def __str__(self):
-            return str(self.name)
+            return str(self.user.username)
 
 
 class Comment(models.Model):
