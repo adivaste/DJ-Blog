@@ -23,7 +23,6 @@
       <form action="" method="post">
             {% csrf_token %}
             <input type="color" name="name" id="">
-            <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
       {{ form.as_p }}
       <input type="submit" value="Submit">
       </form>
@@ -32,7 +31,8 @@
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
             <div class="mx-auto max-w-3xl">
-                  <form class="space-y-8 divide-y divide-gray-200">
+                  <form method="post" class="space-y-8 divide-y divide-gray-200">
+                        {% csrf_token %}
                         <div class="space-y-8 divide-y divide-gray-200">
                           <div>
 
@@ -50,29 +50,28 @@
                                 </div>
                               </div>
 
+                              
+
                               <div class="sm:col-span-6">
                                 <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium text-gray-700">Tags</label>
                                 <div class="mt-1">
-                                  <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  {% render_field form.tags type="text" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %}
+                                  <input type="text" name="tags" id="{{ form.tags.id_for_label }}" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                  <!-- {% render_field form.tags class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %} -->
                                 </div>
                               </div>
 
                               <div class="sm:col-span-3">
-                                    <label for="country" class="block text-sm font-medium text-gray-700">Category</label>
-                                    <div class="mt-1">
-                                      <select id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        <option>Science</option>
-                                        <option>Technology</option>
-                                        <option>Cooking</option>
-                                      </select>
+                                    <label for="{{ form.category.id_for_label }}" class="block text-sm font-medium text-gray-700">Category</label>
+                                    <div class="mt-1">  
+                                      {% render_field form.category id="{{ form.category.id_for_label }}" name="{{ form.category.name }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %}
+                                    
                                     </div>
                                   </div>
                       
                               <div class="sm:col-span-6">
-                                <label for="about" class="block text-sm font-medium text-gray-700">Content</label>
+                                <label for="{{ form.content.id_for_label }}" class="block text-sm font-medium text-gray-700">Content</label>
                                 <div class="mt-1">
-                                  <textarea id="about" name="about" rows="10" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                                  {% render_field form.content class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %}
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">Write a blog post here.</p>
                               </div>

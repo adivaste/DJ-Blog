@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, HttpRespon
 from main.forms import PostForm, CommentForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from main.models import Post, Comment
+from main.models import Post, Comment, Tag
 
 # Create your views here.
 def home(request):
@@ -27,11 +27,58 @@ def posts(request):
 
 def createpost(request):
       if request.method == 'POST':
-            form = PostForm(request.POST)
+            # form = PostForm(request.POST)
             print(request.POST)
+
+            # Make a copy of the request.POST QueryDict object
+            post_data = request.POST.copy()
+            
+            # Get the tags string from the form data
+            tags_string = post_data.get('tags', '')
+            
+            # Split the tags string into a list
+            tag_names = tags_string.split()
+            
+            # Create Tag objects for each tag name
+            tags = [Tag.objects.get_or_create(name=tag_name)[0] for tag_name in tag_names]
+            
+            # Add the tags to the post_data copy
+            post_data.setlist('tags', [str(tag.id) for tag in tags])
+            
+            # Modify the 'title' field in the copy
+            post_data['title'] = 'New Title'
+            
+            # Create a new form instance using the modified data
+            form = PostForm(post_data)
+            print(post_data)
+            
+            # Process the form as usual
             if form.is_valid():
                   form.save()
-                  return HttpResponse("Created broiiii!")
+                  print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111")
+                  return HttpResponse("Created broiiii!") 
+
+
+            # if form.is_valid():
+            #       post = form.save(commit=False)
+            #       post.author = request.user
+            #       tags = form.cleaned_data.get('tags')
+            #       tag_names = tags.split()
+            #       print(tags, tag_names)
+            #       # post.save()
+            #       for tag_name in tag_names:
+            #           print("Working")
+            #           tag, created = Tag.objects.get_or_create(name=tag_name)
+            #           post.tags.add(tag)
+            #       post.save() # Save the post object after adding tags
+            #       return HttpResponse("Created broiiii!")
+                  
+
+
+            # if form.is_valid():
+            #       print("Checking")
+            #       form.save()
+            #       return HttpResponse("Created broiiii!")
       return render(request, 'main/createpost.html', {"form" : PostForm})
 
 def signup(request):

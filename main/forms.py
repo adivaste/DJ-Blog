@@ -1,5 +1,5 @@
 from django import forms
-from main.models import Post, Comment, Author
+from main.models import Post, Comment, Author, Category, Tag
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -7,6 +7,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = "__all__"
+
       
 class CommentForm(forms.ModelForm):
     class Meta:
