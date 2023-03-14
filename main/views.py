@@ -3,6 +3,7 @@ from main.forms import PostForm, CommentForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from main.models import Post, Comment, Tag
+from main.utils import calculate_time_to_read
 
 # Create your views here.
 def home(request):
@@ -49,7 +50,7 @@ def createpost(request):
             post_data['author'] = str(request.user.id)
             post_data['views'] = "0"
             post_data['likes'] = "0"
-            post_data['time_to_read'] = "0"
+            post_data['time_to_read'] = calculate_time_to_read(post_data['content'])
             
             # Create a new form instance using the modified data
             form = PostForm(post_data)
