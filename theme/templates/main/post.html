@@ -9,7 +9,7 @@
 <body>
       Title : {{ post.title }} <br>
       Author  : {{ post.author }} <br>
-      Content : {{ post.content }} <br>
+      Content : {{ post.content | safe }} <br>
 
       <hr>
       Comments :  <br>

@@ -15,15 +15,13 @@
           border: 1px solid #d1d5db;
           outline: none !important;
         }
-      </style>
-      <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-      
+      </style>      
 </head>
 <body>
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
             <div class="mx-auto max-w-3xl">
-                  <form method="post" class="space-y-8 divide-y divide-gray-200">
+                  <form method="post" class="space-y-8 ">
                         {% csrf_token %}
                       <p class="text-3xl">Create a New Post🔥</p>
                         <div class="space-y-8 divide-y divide-gray-200">
@@ -48,7 +46,7 @@
                                 <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium text-gray-700">Tags</label>
                                 <div class="mt-1">
                                   <input type="text" name="tags" id="{{ form.tags.id_for_label }}" class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                  <!-- {% render_field form.tags class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %} -->
+                                  {% render_field form.tags class="tagin block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %}
                                 </div>
                               </div>
 
@@ -63,6 +61,7 @@
                               <div class="sm:col-span-6">
                                 <label for="{{ form.content.id_for_label }}" class="block text-sm font-medium text-gray-700">Content</label>
                                 <div class="mt-1">
+                                  {% render_field form.media %}
                                   {% render_field form.content %}
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">Write a blog post here.</p>
@@ -102,22 +101,12 @@
           
           
 
-<!-- <script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script> -->
+<script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script>
 <script>
 const tagin = new Tagin(document.querySelector('.tagin'), {
   separator: ' '
 })
 </script>
-<!-- <script>
-  ClassicEditor
-          .create( document.querySelector( '#id_content' ) )
-          .then( editor => {
-                  console.log( editor );
-          } )
-          .catch( error => {
-                  console.error( error );
-          } );
-</script> -->
 
 </body>
 </html>

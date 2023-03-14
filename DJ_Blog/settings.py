@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "theme",
     "django_browser_reload",
     "widget_tweaks",
-    "ckeditor",
+    "tinymce",
 ]
 
 TAILWIND_APP_NAME = "theme"
