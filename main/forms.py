@@ -2,10 +2,14 @@ from django import forms
 from main.models import Post, Comment, Author, Category, Tag
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
+
 
 class PostForm(forms.ModelForm):
+    content = RichTextField()
     class Meta:
         model = Post
+        fields = ('title', 'content', 'tags', 'category')
         fields = "__all__"
 
       

@@ -46,7 +46,10 @@ def createpost(request):
             post_data.setlist('tags', [str(tag.id) for tag in tags])
             
             # Modify the 'title' field in the copy
-            post_data['title'] = 'New Title'
+            post_data['author'] = str(request.user.id)
+            post_data['views'] = "0"
+            post_data['likes'] = "0"
+            post_data['time_to_read'] = "0"
             
             # Create a new form instance using the modified data
             form = PostForm(post_data)
