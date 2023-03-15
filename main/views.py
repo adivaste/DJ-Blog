@@ -22,9 +22,7 @@ def post(request, id):
             if form.is_valid():
                   form.save()
       post = get_object_or_404(Post, pk=id)
-      comments = Comment.objects.filter(post=id)
-      for comment in comments:
-            print(comment.replies.all())
+      comments = Comment.objects.filter(post=id, parent=None)
       comment_form = CommentForm
 
       return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form})
