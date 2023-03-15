@@ -85,7 +85,7 @@
                    <!-- || Seperation from Content and Add Comment || -->
                    <br>
                    <hr>
-                   <br>
+                   <br> 
  
                    <!-- || Add comment || -->
                    <div>
@@ -94,7 +94,7 @@
                          <h3 class="mb-4 text-lg font-semibold text-gray-900">Add New Comment </h3> <div class="mt-2">
                            <textarea id="id_body" name="body" rows="3" class="mt-1 p-3 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder="you@example.com"></textarea>
                          </div>
-                         <div class="bg-gray-50 py-3 text-right">
+                         <div class="py-3 text-right">
                                <button type="submit" class="inline-flex m-0 justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add Comment </button>
                          </div>
                         </form>
@@ -125,9 +125,30 @@
                                 {{ comment }}
                               </p>
                               
-                              <h4 class="mt-3 mb-1 uppercase tracking-wide text-gray-400 font-bold text-xs">Replies</h4>
-                      
-                              {% include 'main/comment.html' with comments=comment.replies.all %} 
+                              <span id="{{ comment.id }}_replies" onclick="toggleDisplayReplies(this.id)" class="cursor-pointer mt-3 mb-1 mr-2 uppercase tracking-wide text-gray-400 font-bold text-xs replies">Replies</span> 
+                              <span id="{{ comment.id }}_reply" onclick="toggleDisplayReply(this.id)" class="cursor-pointer mt-3 mb-1 ml-2 uppercase tracking-wide text-gray-400 font-bold text-xs reply">Reply</span>
+
+                              <!-- Reply form -->
+                              <div style="display:none" id="{{ comment.id }}_reply_form" class="transition">
+                                    <form action="" method="post">
+                                          {% csrf_token %}
+                                      <select hidden name="parent">
+                                          <option selected value="{{ comment.id }}"></option>
+                                      </select>
+                                      <div class="mt-2">
+                                       <textarea id="id_body" name="body" rows="3" class="mt-1 p-3 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder="you@example.com"></textarea>
+                                     </div>
+                                     <div class="py-3 text-right">
+                                           <button type="submit" class="inline-flex m-0 justify-center rounded-md bg-indigo-600 py-2 px-3 text-xs font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add Comment </button>
+                                     </div>
+                              </form>
+                              </div>
+
+                              <!-- Reply's thread -->
+                              <div style="display:none" id="{{ comment.id }}_replies_thread">
+                                    {% include 'main/comment.html' with comments=comment.replies.all %}
+                              </div>
+                              
 
                             </div>
                           </div>
@@ -149,7 +170,42 @@
             <input type="submit" value="Submit">
       </form>
 
+      
+      <!-- Script to toggle the Form and Thread -->
+      <script>
+            function toggleDisplayReplies(elementId){
 
+                  var formElement = document.getElementById(elementId + "_thread");
+                  // var repliesElement = document.getElementById(elementId + "_form");
+
+                  if (formElement.style.display === "none") {
+                        formElement.style.display = "block";
+                        // repliesElement.style.display = "none";
+                        document.getElementById(elementId).style.color = "black";
+                  }
+                  else {
+                        formElement.style.display = "none";
+                        document.getElementById(elementId).style.color = "#9CA3AF";
+                  }
+            }
+            function toggleDisplayReply(elementId){
+
+                  document.getElementById(elementId).style.color = "black";
+                  var formElement = document.getElementById(elementId + "_form");
+                  // var repliesElement = document.getElementById(elementId + "_thread");
+
+                  if (formElement.style.display === "none") {
+                        formElement.style.display = "block";
+                        // repliesElement.style.display = "none";
+                        document.getElementById(elementId).style.color = "black";
+                  }
+                  else {
+                        formElement.style.display = "none";
+                        // repliesElement.style.display = "none";
+                        document.getElementById(elementId).style.color = "#9CA3AF";
+                  }
+            }
+      </script>
 </body>
 
 </html>
