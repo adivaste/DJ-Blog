@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404, HttpRespon
 from main.forms import PostForm, CommentForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from main.models import Post, Comment, Tag
+from main.models import Post, Comment, Tag, Author
 from main.utils import calculate_time_to_read
 
 # Create your views here.
@@ -47,10 +47,12 @@ def createpost(request):
             post_data.setlist('tags', [str(tag.id) for tag in tags])
             
             # Modify the 'title' field in the copy
-            post_data['author'] = str(request.user.id)
+            post_data['author'] = Author.objects.get_or_create(user_id=request.user.id)[0].id
             post_data['views'] = "0"
             post_data['likes'] = "0"
             post_data['time_to_read'] = calculate_time_to_read(post_data['content'])
+
+            print(request.user.id)
             
             # Create a new form instance using the modified data
             form = PostForm(post_data)
@@ -61,28 +63,9 @@ def createpost(request):
                   form.save()
                   print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111")
                   return HttpResponse("Created broiiii!") 
+            else:
+                  print(form.errors)
 
-
-            # if form.is_valid():
-            #       post = form.save(commit=False)
-            #       post.author = request.user
-            #       tags = form.cleaned_data.get('tags')
-            #       tag_names = tags.split()
-            #       print(tags, tag_names)
-            #       # post.save()
-            #       for tag_name in tag_names:
-            #           print("Working")
-            #           tag, created = Tag.objects.get_or_create(name=tag_name)
-            #           post.tags.add(tag)
-            #       post.save() # Save the post object after adding tags
-            #       return HttpResponse("Created broiiii!")
-                  
-
-
-            # if form.is_valid():
-            #       print("Checking")
-            #       form.save()
-            #       return HttpResponse("Created broiiii!")
       return render(request, 'main/createpost.html', {"form" : PostForm})
 
 def signup(request):
