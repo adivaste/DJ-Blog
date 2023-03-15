@@ -40,7 +40,7 @@ class SignUpForm(UserCreationForm):
             author = Author.objects.create(
                 user = user,
                 dob = self.cleaned_data['dob'],
-                profile_pic = self.cleaned_data['avatar']
+                profile_pic=self.cleaned_data.get('avatar') or Author.get_default_profile_pic()
             )
             author.save()
 
