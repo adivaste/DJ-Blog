@@ -12,11 +12,19 @@ def home(request):
 
 def post(request, id):
       if request.method == 'POST':
-            form = CommentForm(request.POST)
+            # form = CommentForm(request.POST)
+            modifiedPostRequest = request.POST.copy()
+            modifiedPostRequest['author'] = Author.objects.get(pk=request.user.id)
+            modifiedPostRequest['post'] = Post.objects.get(pk=id)
+
+            form = CommentForm(modifiedPostRequest)
+
             if form.is_valid():
                   form.save()
       post = get_object_or_404(Post, pk=id)
       comments = Comment.objects.filter(post=id)
+      for comment in comments:
+            print(comment.replies.all())
       comment_form = CommentForm
 
       return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form})
