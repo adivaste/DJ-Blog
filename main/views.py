@@ -30,6 +30,8 @@ def post(request, id):
 
 def posts(request):
       posts = Post.objects.all()
+      for post in posts:
+            print(post.tags.all())
       return render(request, 'main/posts.html', {"posts": posts})
 
 def createpost(request):
