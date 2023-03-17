@@ -306,12 +306,12 @@
                     <div class="flex-1">
                         <p class="text-sm font-medium text-indigo-600">
                               <a href="" class="flex justify-between">
-                                   <span class="hover:underline"> {{ post.category }} </span>
+                                   <span class="hover:underline"> {{ post.category }} • {{ post.time_to_read }} min <span class="hidden md:inline lg:inline">to read</span> </span>
                                    <span>{{ post.publish_date|date:"F j, Y" }}</span>
                               </a>
                         </p>
                         <a href="{% url 'post' post.id %}" class="mt-2 block">
-                              <p class="my-0.5 text-xl font-semibold text-gray-900">{{ post.title }} </p>
+                              <p class="my-1 text-xl font-semibold text-gray-900">{{ post.title }} </p>
                               <p class="mt-1">
                                 {% for tag in post.tags.all %}
                                 <span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"> {{ tag }}</span>

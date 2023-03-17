@@ -11,5 +11,5 @@ def clean_text(value):
     """
     cleaned_text =  strip_tags(value).replace("&nbsp;", " ")
     if len(cleaned_text) > 140 :
-        return cleaned_text[1:140] + " ..."
+        return cleaned_text[0:140] + " ..."
     return cleaned_text
