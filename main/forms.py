@@ -18,6 +18,7 @@ class CommentForm(forms.ModelForm):
       model = Comment
       fields = "__all__"
 
+
 class SignUpForm(UserCreationForm):
     dob = forms.DateTimeField(required=True)
     avatar = forms.ImageField(required=False)

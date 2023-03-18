@@ -11,21 +11,51 @@ def home(request):
       return render(request, 'main/home.html', context)
 
 def post(request, id):
+
+      # Adding the comment 
       if request.method == 'POST':
-            # form = CommentForm(request.POST)
             modifiedPostRequest = request.POST.copy()
             modifiedPostRequest['author'] = Author.objects.get(pk=request.user.id)
             modifiedPostRequest['post'] = Post.objects.get(pk=id)
-
             form = CommentForm(modifiedPostRequest)
 
             if form.is_valid():
                   form.save()
+
+      # Get the post
       post = get_object_or_404(Post, pk=id)
       comments = Comment.objects.filter(post=id, parent=None)
       comment_form = CommentForm
 
+      # Increamenting the views of post by 1
+      if post:
+            post.views = post.views + 1
+            post.save()
+      
       return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form})
+
+#  Like the post
+def like(request, id):
+      if request.method == "GET":
+            post = get_object_or_404(Post, pk=id)
+            if not post.likes.filter(pk=request.user.id).exists():
+                  post.likes.add(Author.objects.get(pk=request.user.id))
+                  post.save()
+                  print(post.likes.count())
+                  return HttpResponse('Liked')
+            return HttpResponse('Already Liked')
+
+
+#  Like the post
+def favorite(request, id):
+      if request.method == "GET":
+            userObj = get_object_or_404(Author, pk=request.user.id)
+            if not userObj.favorites.filter(pk=id).exists():
+                  userObj.favorites.add(Post.objects.get(pk=id))
+                  userObj.save()
+                  print(userObj.favorites.count())
+                  return HttpResponse('Added to favorites')
+            return HttpResponse('Already Added')
 
 
 def posts(request):
@@ -55,9 +85,10 @@ def createpost(request):
             post_data.setlist('tags', [str(tag.id) for tag in tags])
             
             # Modify the 'title' field in the copy
-            post_data['author'] = Author.objects.get_or_create(user_id=request.user.id)[0].id
+            print("--------",request.user.id)
+            post_data['author'] = str(Author.objects.get_or_create(pk=request.user.id)[0].id)
             post_data['views'] = "0"
-            post_data['likes'] = "0"
+            # post_data['likes'] = None
             post_data['time_to_read'] = calculate_time_to_read(post_data['content'])
 
             print(request.user.id)
@@ -69,7 +100,7 @@ def createpost(request):
             # Process the form as usual
             if form.is_valid():
                   form.save()
-                  print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111")
+                  print("-----")
                   return HttpResponse("Created broiiii!") 
             else:
                   print(form.errors)
