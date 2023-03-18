@@ -11,22 +11,36 @@ def home(request):
       return render(request, 'main/home.html', context)
 
 def post(request, id):
+
+      # Adding the comment 
       if request.method == 'POST':
-            # form = CommentForm(request.POST)
             modifiedPostRequest = request.POST.copy()
             modifiedPostRequest['author'] = Author.objects.get(pk=request.user.id)
             modifiedPostRequest['post'] = Post.objects.get(pk=id)
-
             form = CommentForm(modifiedPostRequest)
 
             if form.is_valid():
                   form.save()
+
+      # Get the post
       post = get_object_or_404(Post, pk=id)
       comments = Comment.objects.filter(post=id, parent=None)
       comment_form = CommentForm
 
+      # Increamenting the views of post by 1
+      if post:
+            post.views = post.views + 1
+            post.save()
+      
       return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form})
 
+#  Like the post
+def like(request, id):
+      if request.method == "GET":
+            post = get_object_or_404(Post, pk=id)
+            post.likes += 1
+            post.save()
+            return HttpResponse('Liked')
 
 def posts(request):
       posts = Post.objects.all()

@@ -16,7 +16,6 @@ class Post(models.Model):
       tags = models.ManyToManyField('Tag', related_name='post_set', null=True, blank=True)
       category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
 
-
       def __str__(self):
             return str(self.title)
 
