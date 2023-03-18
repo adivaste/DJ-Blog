@@ -11,6 +11,7 @@
       <title>First post about python</title>
       {% tailwind_css %}
       <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
       <script>
             tailwind.config = {
                   theme: {
@@ -244,7 +245,19 @@
             <div class="pt-8 pb-0.5 font-semibold text-gray-700 px-1 text-lg font-sans"> More from {{ post.author.user.first_name }} </div>
 
 
-            <div class="pr-1"><button type="button" class="absolute bottom-4 fixed font-sans inline-flex items-center rounded-full border border-gray-300 z-100 transition text-white bg-sky-500 shadow-md px-4 py-2 text-sm font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"> Likes : 23 | Comments : 12 | Fav : 5 </button></div> 
+            <div class="pr-1"><button type="button" class="absolute bottom-4 fixed font-sans inline-flex items-center rounded-full border border-gray-300 z-100 transition text-white bg-sky-500 shadow-md px-4 py-2 text-sm font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+              
+              <span class="post_like">
+                <i class="fa-regular fa-heart"></i> &nbsp; {{ post.likes.count }} &nbsp;&nbsp;&nbsp;
+              </span> 
+              
+              &nbsp; <i class="fa-regular fa-comment"></i> &nbsp; {{ comments.count }} &nbsp;&nbsp;&nbsp;
+              
+              <span class="post_favorite">
+                &nbsp; <i class="fa-regular fa-bookmark"></i> &nbsp;
+              </span> 
+            
+            </button></div> 
           </div>
 
       </aside>
