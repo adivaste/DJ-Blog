@@ -38,9 +38,25 @@ def post(request, id):
 def like(request, id):
       if request.method == "GET":
             post = get_object_or_404(Post, pk=id)
-            post.likes += 1
-            post.save()
-            return HttpResponse('Liked')
+            if not post.likes.filter(pk=request.user.id).exists():
+                  post.likes.add(Author.objects.get(pk=request.user.id))
+                  post.save()
+                  print(post.likes.count())
+                  return HttpResponse('Liked')
+            return HttpResponse('Already Liked')
+
+
+#  Like the post
+def favorite(request, id):
+      if request.method == "GET":
+            userObj = get_object_or_404(Author, pk=request.user.id)
+            if not userObj.favorites.filter(pk=id).exists():
+                  userObj.favorites.add(Post.objects.get(pk=id))
+                  userObj.save()
+                  print(userObj.favorites.count())
+                  return HttpResponse('Added to favorites')
+            return HttpResponse('Already Added')
+
 
 def posts(request):
       posts = Post.objects.all()

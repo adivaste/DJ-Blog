@@ -9,6 +9,7 @@ urlpatterns = [
       path('posts', views.posts, name='posts'),
       path('posts/<int:id>', views.post, name='post'),
       path('posts/<int:id>/like', views.like, name='like'),
+      path('posts/<int:id>/favorite', views.favorite, name='favorite'),
       path('createpost', views.createpost, name='createpost'),
       path('login', views.user_login, name='login'),
       path('signup', views.signup, name='signup'),
