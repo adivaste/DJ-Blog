@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from main.models import Post, Comment, Tag, Author
 from main.utils import calculate_time_to_read
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 def home(request):
@@ -43,7 +45,10 @@ def like(request, id):
                   post.save()
                   print(post.likes.count())
                   return HttpResponse('Liked')
-            return HttpResponse('Already Liked')
+            else:
+                  post.likes.remove(Author.objects.get(pk=request.user.id))
+                  return HttpResponse("removed")
+      return HttpResponse('Some diff')
 
 
 #  Like the post
@@ -86,7 +91,8 @@ def createpost(request):
             
             # Modify the 'title' field in the copy
             print("--------",request.user.id)
-            post_data['author'] = str(Author.objects.get_or_create(pk=request.user.id)[0].id)
+            userObj = User.objects.get(pk=request.user.id)
+            post_data['author'] = str(Author.objects.get_or_create(user=userObj)[0].id)
             post_data['views'] = "0"
             # post_data['likes'] = None
             post_data['time_to_read'] = calculate_time_to_read(post_data['content'])
