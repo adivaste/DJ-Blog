@@ -15,7 +15,7 @@ def post(request, id):
       # Adding the comment 
       if request.method == 'POST':
             modifiedPostRequest = request.POST.copy()
-            modifiedPostRequest['author'] = Author.objects.get(pk=request.user.id)
+            modifiedPostRequest['author'] = Author.objects.get(user=request.user.id)
             modifiedPostRequest['post'] = Post.objects.get(pk=id)
             form = CommentForm(modifiedPostRequest)
 
@@ -31,31 +31,45 @@ def post(request, id):
       if post:
             post.views = post.views + 1
             post.save()
+
+      # Check Liked and Bookmarked
+      isLiked = post.likes.filter(user=request.user.id).exists()
+      isFavorited = Author.objects.get(user=request.user.id).favorites.filter(id=id).exists()
       
-      return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form})
+      return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form, "isLiked" : isLiked, "isFavorited" : isFavorited})
 
 #  Like the post
 def like(request, id):
-      if request.method == "GET":
-            post = get_object_or_404(Post, pk=id)
-            if not post.likes.filter(pk=request.user.id).exists():
-                  post.likes.add(Author.objects.get(pk=request.user.id))
-                  post.save()
-                  print(post.likes.count())
-                  return HttpResponse('Liked')
-            return HttpResponse('Already Liked')
-
+      post = get_object_or_404(Post, pk=id)
+      liked = post.likes.filter(user=request.user.id).exists()
+      current_url = request.get_full_path()
+      if request.method == "POST" and not liked :
+            post.likes.add(Author.objects.get(user=request.user.id))
+            post.save()
+            print(post.likes.count())
+            return HttpResponse("Liked")
+      elif (request.method == "DELETE"):
+            post.likes.remove(Author.objects.get(user=request.user.id))
+            return HttpResponse("Deleted")
+      else:
+            return HttpResponse("Internal Error")
+      
 
 #  Like the post
 def favorite(request, id):
-      if request.method == "GET":
-            userObj = get_object_or_404(Author, pk=request.user.id)
-            if not userObj.favorites.filter(pk=id).exists():
-                  userObj.favorites.add(Post.objects.get(pk=id))
-                  userObj.save()
-                  print(userObj.favorites.count())
-                  return HttpResponse('Added to favorites')
-            return HttpResponse('Already Added')
+      
+      userObj = get_object_or_404(Author, user=request.user.id)
+      isFavorited = userObj.favorites.filter(pk=id).exists()
+      if request.method == "POST" and not isFavorited:
+            userObj.favorites.add(Post.objects.get(pk=id))
+            userObj.save()
+            print(userObj.favorites.count())
+            return HttpResponse('Added to favorites')
+      elif (request.method == "DELETE"):
+            userObj.favorites.remove(Post.objects.get(pk=id))
+            return HttpResponse('Removed bookmark')
+      else:
+            return HttpResponse("Internal Error")
 
 
 def posts(request):
@@ -86,7 +100,9 @@ def createpost(request):
             
             # Modify the 'title' field in the copy
             print("--------",request.user.id)
-            post_data['author'] = str(Author.objects.get_or_create(pk=request.user.id)[0].id)
+            userObj, created = Author.objects.get_or_create(user=request.user.id) 
+            print("----------------------???????" + str(userObj.id))
+            post_data['author'] = str(userObj.id)
             post_data['views'] = "0"
             # post_data['likes'] = None
             post_data['time_to_read'] = calculate_time_to_read(post_data['content'])
