@@ -87,7 +87,15 @@ def favorite(request, id):
 
 
 def posts(request):
-      posts = Post.objects.all()
+
+      # Search Query
+      search_query =  request.GET.get('search', '')
+      
+      if search_query:
+            posts = Post.objects.filter(title__icontains=search_query)
+      else:
+            posts = Post.objects.all()
+            
       for post in posts:
             print(post.tags.all())
       return render(request, 'main/posts.html', {"posts": posts})

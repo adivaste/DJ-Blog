@@ -49,7 +49,7 @@
         </button>
         <div class="flex flex-1 justify-between px-4 sm:px-6">
           <div class="flex flex-1">
-            <form class="flex w-full md:ml-0" action="#" method="GET">
+            <form class="flex w-full md:ml-0" action="{% url 'posts' %}" method="GET">
               <label for="search-field" class="sr-only">Search all files</label>
               <div class="relative w-full text-gray-400 focus-within:text-gray-600">
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center">
@@ -58,7 +58,7 @@
                     <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
                   </svg>
                 </div>
-                <input name="search-field" id="search-field" class="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0" placeholder="Search" type="search">
+                <input name="search" id="search" class="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0" placeholder="Search" type="search">
               </div>
             </form>
           </div>
