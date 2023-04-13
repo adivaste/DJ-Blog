@@ -12,9 +12,15 @@ def home(request):
       return render(request, 'main/home.html', context)
 
 # Author Profile 
-def profile(request,id):
-      posts = Post.objects.filter(author__id=request.user.id)
-      return render(request, 'main/profile.html', {'posts' : posts})
+def profile(request):
+      posts = Post.objects.filter(author__user=request.user.id)
+      author = Author.objects.get(user=request.user.id)
+      return render(request, 'main/profile.html', {'posts' : posts, 'author' : author})
+
+def authorProfile(request,id):
+      posts = Post.objects.filter(author__user=id)
+      author = Author.objects.get(user=id)
+      return render(request, 'main/profile.html', {'posts' : posts, 'author' : author})
 
 def post(request, id):
 

@@ -44,7 +44,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['"SF Pro Display"', 'sans-serif']
+                sans: ['"SF Pro Display"', 'sans-serif'],
+                anuphan: ['Anuphan', 'sans-serif']
               }          
         },
     },
