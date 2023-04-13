@@ -6,11 +6,15 @@ from main.models import Post, Comment, Tag, Author
 from main.utils import calculate_time_to_read
 from django.contrib.auth.models import User
 
-
 # Create your views here.
 def home(request):
       context = {}
       return render(request, 'main/home.html', context)
+
+# Author Profile 
+def profile(request,id):
+      posts = Post.objects.filter(author__id=request.user.id)
+      return render(request, 'main/profile.html', {'posts' : posts})
 
 def post(request, id):
 
@@ -95,7 +99,7 @@ def posts(request):
             posts = Post.objects.filter(title__icontains=search_query)
       else:
             posts = Post.objects.all()
-            
+
       for post in posts:
             print(post.tags.all())
       return render(request, 'main/posts.html', {"posts": posts})

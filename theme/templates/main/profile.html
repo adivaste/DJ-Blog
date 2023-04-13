@@ -1,0 +1,162 @@
+{% load static tailwind_tags %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>First post about python</title>
+      {% tailwind_css %}
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+      <script>
+            tailwind.config = {
+                  theme: {
+                        extend: {
+                              colors: {
+                                    clifford: '#da373d',
+                              },
+                              fontFamily: {
+                                  sans: ['"SF Pro Display"', 'sans-serif']
+                              } 
+                  }
+            }
+      }
+      </script>
+</head>
+
+<body>
+
+<!-- Navbar -->    
+
+<div class="flex h-full">
+  <!-- Narrow sidebar -->
+
+
+  <!-- Content area -->
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <header class="w-full">
+      <div class="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow-sm">
+        <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
+          <span class="sr-only">Open sidebar</span>
+          <!-- Heroicon name: outline/bars-3-bottom-left -->
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+          </svg>
+        </button>
+        <div class="flex flex-1 justify-between px-4 sm:px-6">
+          <div class="flex flex-1">
+            <p class="py-5">DJ Blog</p>
+          </div>
+          <div class="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
+            <!-- Profile dropdown -->
+            <div class="relative flex-shrink-0">
+              <div>
+                <button type="button" class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                  <span class="sr-only">Open user menu</span>
+                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="">
+                </button>
+              </div>
+
+              <!--
+                Dropdown menu, show/hide based on menu state.
+
+                Entering: "transition ease-out duration-100"
+                  From: "transform opacity-0 scale-95"
+                  To: "transform opacity-100 scale-100"
+                Leaving: "transition ease-in duration-75"
+                  From: "transform opacity-100 scale-100"
+                  To: "transform opacity-0 scale-95"
+              -->
+              <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                <!-- Active: "bg-gray-100", Not Active: "" -->
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</a>
+              </div>
+            </div>
+
+            <a href="{% url 'createpost' %}"  class="flex items-center justify-center rounded-full bg-indigo-600 p-1 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <!-- Heroicon name: outline/plus -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              <!-- <span class="sr-only">Add file</span> -->
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+    <!-- Main content -->
+    <div class="flex flex-1 items-stretch overflow-hidden">
+      
+
+      <!-- Secondary column (hidden on smaller screens) For Profile -->
+      <aside class="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white  lg:block">
+        <div class="p-6 flex flex-col">
+          <div class="w-24 h-24 mx-auto"><img class="border-gray-300 border rounded-full w-24 h-24" src="{{ post.author.profile_pic.url }}" alt=""></div>
+
+            <div class="pt-4 pb-0.5 font-semibold px-1 text-lg font-sans mx-auto">{{ post.author.user.first_name }} Rao Jadhav {{ post.author.user.last_name }}</div>
+            <div class="pb-1 px-1 text-base font-sans text-gray-500 mx-auto"> 19 Year's old • 945 Followers </div>
+            <div class="pb-1 px-1 text-base font-sans text-gray-700 mx-auto cursor-pointer">adivaste@gmail.com  </div>
+
+            <div class="pb-1 pt-2 px-1 text-base font-sans text-gray-600 mx-auto text-center"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid ratione accusamus dolore, molestias aliquam odio adipisci maxime libero eius ipsum?</div>
+            </div>
+      </aside>
+
+
+      <main class="flex-1 overflow-y-auto">
+        <!-- Primary column -->
+        <section aria-labelledby="primary-heading" class="flex h-full min-w-0 flex-1 flex-col lg:order-last">
+            
+                <div class="mx-2 mt-6 grid max-w-lg gap-5 lg:max-w-none">
+      
+                    {% if posts %}
+                      {% for post in posts %}
+          
+                          <div class="flex flex-col lg:flex-row overflow-hidden rounded-lg shadow-inner border-[1.5px]">
+                            <div class="flex-shrink-0">
+                              <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80" alt="">
+                            </div>
+                            <div class="flex flex-1 flex-col lg:flex-row justify-between bg-white p-4 lg:p-6 md:p-6">
+                              <div class="flex-1">
+                                  <p class="text-sm font-medium text-indigo-600">
+                                        <a href="" class="flex justify-between">
+                                             <span class="hover:underline"> {{ post.category }} • {{ post.time_to_read }} min <span class="hidden md:inline lg:inline">to read</span> </span>
+                                             <span>{{ post.publish_date|date:"F j, Y" }}</span>
+                                        </a>
+                                  </p>
+                                  <a href="{% url 'post' post.id %}" class="mt-2 block">
+                                        <p class="my-1 text-xl font-semibold text-gray-900">{{ post.title }} </p>
+                                        <p class="mt-1">
+                                          {% for tag in post.tags.all %}
+                                          <span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"> {{ tag }}</span>
+                                          {% endfor %}
+                                        </p>
+                                  </a>
+                              </div>
+                            </div>
+                          </div>
+          
+                      {% endfor %}
+                      {% else %}
+                      <p class="my-1 text-xl text-center font-semibold text-gray-900"> No Posts ! </p>
+                      {% endif %}
+                      </div>
+        </section>
+      </main>
+
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>
