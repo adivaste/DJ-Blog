@@ -47,9 +47,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
           </svg>
         </button>
+        
         <div class="flex flex-1 justify-between px-4 sm:px-6">
+          <a href="{% url 'posts' %}" class="cursor-pointer logo py-5 text-xl pr-8 pl-6 text-indigo-500 font-semibold"> <i class="fa-solid fa-pen-nib"></i> BZ</a> 
           <div class="flex flex-1">
-            <form class="flex w-full md:ml-0" action="#" method="GET">
+            <form class="flex w-full md:ml-0" action="{% url 'posts' %}" method="GET">
               <label for="search-field" class="sr-only">Search all files</label>
               <div class="relative w-full text-gray-400 focus-within:text-gray-600">
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center">
@@ -58,7 +60,7 @@
                     <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
                   </svg>
                 </div>
-                <input name="search-field" id="search-field" class="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0" placeholder="Search" type="search">
+                <input name="search" id="search" class="h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0" placeholder="Search" type="search">
               </div>
             </form>
           </div>
@@ -90,13 +92,13 @@
               </div>
             </div>
 
-            <button type="button" class="flex items-center justify-center rounded-full bg-indigo-600 p-1 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <a href="{% url 'createpost' %}"  class="flex items-center justify-center rounded-full bg-indigo-600 p-1 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               <!-- Heroicon name: outline/plus -->
               <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
-              <span class="sr-only">Add file</span>
-            </button>
+              <!-- <span class="sr-only">Add file</span> -->
+            </a>
           </div>
         </div>
       </div>
@@ -239,7 +241,7 @@
             <div class="flex px-1 pt-4">
               <div class="pr-1"><button type="button" class="font-sans inline-flex items-center rounded-full border border-transparent transition bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"> Follow </button></div>
               <div class="pr-1">
-                <button type="button" class="font-sans inline-flex items-center rounded-full border border-transparent transition bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"> AV </button>
+                <a type="button" href="{% url 'authorProfile' post.author.user.id %}" class="font-sans inline-flex items-center rounded-full border border-transparent transition bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"> Know More </a>
               </div>
             </div>
             <div class="pt-8 pb-0.5 font-semibold text-gray-700 px-1 text-lg font-sans"> More from {{ post.author.user.first_name }} </div>
@@ -247,16 +249,43 @@
 
             <div class="pr-1"><button type="button" class="absolute bottom-4 fixed font-sans inline-flex items-center rounded-full border border-gray-300 z-100 transition text-white bg-sky-500 shadow-md px-4 py-2 text-sm font-medium shadow-sm hover:bg-sky-700 ">
               
+              <!-- Likes -->
+              <!-- <span class="post_like">
+                {% if isLiked %}
+                    <i class="liked fa-solid fa-heart" onclick="toogleLike({{ isLiked }})"></i> &nbsp; 
+                {% else %}
+                    <i class="unliked fa-regular fa-heart" onclick="toogleLike({{ isLiked }})"></i> &nbsp; 
+                {% endif %}
+
+                {{ post.likes.count }} 
+                &nbsp;&nbsp;&nbsp;
+              </span>  -->
+
+
               <span class="post_like">
-                <i class="fa-regular fa-heart"></i> &nbsp; {{ post.likes.count }} &nbsp;&nbsp;&nbsp;
+                    <i class="likeButton {% if isLiked %} fa-solid {% else %} fa-regular {% endif %}  fa-heart" onclick="toogleLike(`{{ isLiked }}`)"></i> &nbsp;          
+                {{ post.likes.count }} 
+                &nbsp;&nbsp;&nbsp;
               </span> 
               
+
+              <!-- Comments -->
               &nbsp; <i class="fa-regular fa-comment"></i> &nbsp; {{ comments.count }} &nbsp;&nbsp;&nbsp;
                <i class="fa-regular fa-eye"></i> &nbsp; {{ post.views }} &nbsp;&nbsp;&nbsp;
 
+               <!-- Bookmarked -->
+              <!-- <span class="post_favorite">
+                {% if isFavorited %}
+                    &nbsp; <i class="favorited fa-solid fa-bookmark" onclick="toggleFavorite({{ isFavorited }})"></i> &nbsp;
+                {% else %}
+                    &nbsp; <i class="unfavorited fa-regular fa-bookmark" onclick="toogleFavorite({{ isFavorited }})"></i> &nbsp;
+                {% endif %}
+              </span>  -->
+
               <span class="post_favorite">
-                &nbsp; <i class="fa-regular fa-bookmark"></i> &nbsp;
-              </span> 
+                <i class="favoriteButton {% if isFavorited %} fa-solid {% else %} fa-regular {% endif %}  fa-bookmark" onclick="toogleFavorite(`{{ isFavorited}}`)"></i> &nbsp;          
+            &nbsp;&nbsp;&nbsp;
+          </span> 
             
             </button></div> 
           </div>
@@ -303,6 +332,65 @@
                         document.getElementById(elementId).style.color = "#9CA3AF";
                   }
             }
+
+            var csrftoken = '{{ csrf_token }}'
+            var urlEndpointForLike = window.location.href + "/like";
+            var urlEndpointForFavorite = window.location.href + "/favorite";
+
+            function toogleLike(status){
+                const requestObj = new XMLHttpRequest()
+                requestObj.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                        location.reload();
+                    }
+                }
+                if (status == "True"){
+                  requestObj.open("DELETE", urlEndpointForLike);
+                }
+                else{
+                  requestObj.open("POST", urlEndpointForLike);
+                }
+                requestObj.setRequestHeader("X-CSRFToken", csrftoken)
+                requestObj.send()
+            }
+
+            function toogleFavorite(status){
+                const requestObj = new XMLHttpRequest()
+                requestObj.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                        location.reload();
+                    }
+                }
+                if (status == "True"){
+                  requestObj.open("DELETE", urlEndpointForFavorite);
+                }
+                else{
+                  requestObj.open("POST", urlEndpointForFavorite);
+                }
+                requestObj.setRequestHeader("X-CSRFToken", csrftoken)
+                requestObj.send()
+            }
+
+            function toogleFollow(status){
+                const requestObj = new XMLHttpRequest()
+                requestObj.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                        location.reload();
+                    }
+                }
+                if (status == "True"){
+                  requestObj.open("DELETE", urlEndpointForFavorite);
+                }
+                else{
+                  requestObj.open("POST", urlEndpointForFavorite);
+                }
+                requestObj.setRequestHeader("X-CSRFToken", csrftoken)
+                requestObj.send()
+            }
+
       </script>
 </body>
 </html>

@@ -26,6 +26,7 @@ class Author(models.Model):
       dob = models.DateField(default=date.today())
       profile_pic = models.ImageField(upload_to='author_pics', blank=True, null=True, default='author_pics/default1.png')
       favorites = models.ManyToManyField('Post', related_name='favorite_of_authors', null=True, blank=True)
+      following = models.ManyToManyField('Author', related_name='followers', null=True, blank=True)
 
       def __str__(self):
             return str(self.user.username)
