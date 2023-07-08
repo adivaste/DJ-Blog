@@ -1,0 +1,13 @@
+virtualenv env
+cd env
+source ./bin/activate
+
+pip install -r requirements.txt
+
+// python manage.py tailwind init
+python manage.py tailwind install
+python manage.py tailwind start
+
+
+python manage.py migrate
+python managepy makemigrations
