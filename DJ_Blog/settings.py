@@ -56,13 +56,23 @@ INSTALLED_APPS = [
 
 ]
 
-SITE_ID = 1
+SOCIALACCOUNT_PROVIDERS = {
+    "google" : {
+        "SCOPE" : [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS" : {"access_type" : "online"}
+    }
+}
+
+SITE_ID = 2
 
 TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-NPM_BIN_PATH = "/home/codespace/nvm/current/bin/npm"
+NPM_BIN_PATH = "C:\Program Files\nodejs\node_modules\npm\bin\npm"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -108,17 +118,6 @@ DATABASES = {
     }
 }
 
-AUTHENTICATION_BACKENDS = [
-
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-]
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -137,6 +136,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Tailwind Configuaration on windows for NPM
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -170,3 +171,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if 'CODESPACE_NAME' in os.environ:
     CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_REDIRECT_URL = "/posts"
+LOGOUT_REDIRECT_URL = "/login"
+# ACCOUNT_ADAPTER = 'main.account_adapter.CustomAccountAdapter'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'

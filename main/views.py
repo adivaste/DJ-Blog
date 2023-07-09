@@ -45,8 +45,9 @@ def post(request, id):
             post.save()
 
       # Check Liked and Bookmarked
-      isLiked = post.likes.filter(user=request.user.id).exists()
-      isFavorited = Author.objects.get(user=request.user.id).favorites.filter(id=id).exists()
+      user = User.objects.get(id=request.user.id)
+      isLiked = post.likes.filter(user=user).exists()
+      isFavorited = Author.objects.get(user=user).favorites.filter(id=id).exists()
       
       return render(request, 'main/post.html', {'id': id, 'post' : post, 'comments': comments, "comment_form": comment_form, "isLiked" : isLiked, "isFavorited" : isFavorited})
 
@@ -132,7 +133,9 @@ def createpost(request):
             
             # Modify the 'title' field in the copy
             print("--------",request.user.id)
-            userObj, created = Author.objects.get_or_create(user=request.user.id) 
+
+            user = User.objects.get(username=request.user.username)
+            userObj, created = Author.objects.get_or_create(user=user)
             print("----------------------???????" + str(userObj.id))
             post_data['author'] = str(userObj.id)
             userObj = User.objects.get(pk=request.user.id)

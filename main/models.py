@@ -23,7 +23,7 @@ class Post(models.Model):
 
 class Author(models.Model):
       user = models.OneToOneField(User, on_delete=models.CASCADE)
-      dob = models.DateField(default=date.today())
+      dob = models.DateField(default=date.today(), null=True)
       profile_pic = models.ImageField(upload_to='author_pics', blank=True, null=True, default='author_pics/default1.png')
       favorites = models.ManyToManyField('Post', related_name='favorite_of_authors', null=True, blank=True)
       following = models.ManyToManyField('Author', related_name='followers', null=True, blank=True)
