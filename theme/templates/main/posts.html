@@ -6,319 +6,355 @@
 <html lang="en">
 
 <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>All posts</title>
-      {% tailwind_css %}
-      <script src="https://cdn.tailwindcss.com"></script>
-      <script>
-            tailwind.config = {
-                  theme: {
-                        extend: {
-                              colors: {
-                                    clifford: '#da373d',
-                              },
-                              fontFamily: {
-                                  sans: ['"SF Pro Display"', 'sans-serif']
-                              } 
-                  }
-            }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All posts</title>
+  {% tailwind_css %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          },
+          fontFamily: {
+            sans: ['"SF Pro Display"', 'sans-serif']
+          }
+        }
       }
-      </script>
+    }
+  </script>
 </head>
 
 <body>
 
-    <!-- Main Blog Posts -->
-       
-      <!-- <div class="relative bg-gray-50 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
-            <div class="absolute inset-0">
-                  <div class="h-1/3 bg-white sm:h-2/3"></div>
+  <!-- Background color split screen for large screens -->
+  <div class="fixed top-0 left-0 h-full w-1/2 bg-white" aria-hidden="true"></div>
+  <div class="fixed top-0 right-0 h-full w-1/2 bg-gray-50" aria-hidden="true"></div>
+  <div class="relative flex min-h-screen flex-col">
+
+    <!-- Navbar -->
+    <nav class="flex-shrink-0 bg-white-600 border border-1">
+      <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+          <!-- Logo section -->
+          <div class="flex items-center px-2 lg:px-0 xl:w-64">
+            <a href="/posts">
+            <div class="flex items-center">
+                <img class="h-8 w-auto" src="https://i.ibb.co/MSnmgN2/image.png" alt="Your Company">
+                <span class="text-xl font-bold text-gray-800 px-2">BlogVista</span>
             </div>
-            
-            <div class="relative mx-auto max-w-7xl">
-                  <div class="text-center">
-                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
-                        <p class="mx-auto mt-3 max-w-2xl text-xl text-gray-500 sm:mt-4">Lorem ipsum dolor sit amet
-                              consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.</p>
-                  </div>
-                  <div class="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
-
-
-            {% for post in posts %}
-                        <div class="flex flex-col overflow-hidden rounded-lg shadow-lg">
-                              <div class="flex-shrink-0">
-                                    <img class="h-48 w-full object-cover"
-                                          src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80"
-                                          alt="">
-                              </div>
-                              <div class="flex flex-1 flex-col justify-between bg-white p-6">
-                                    <div class="flex-1">
-                                          <p class="text-sm font-medium text-indigo-600">
-                                                <a href="" class="flex justify-between">
-                                                     <span class="hover:underline"> {{ post.category }} </span>
-                                                     <span>{{ post.publish_date|date:"F j, Y" }}</span>
-
-                                                </a>
-                                          </p>
-                                          <a href="{% url 'post' post.id %}" class="mt-2 block">
-                                                <p class="text-xl font-semibold text-gray-900">{{ post.title }}</p>
-                                                <p class="mt-3 text-base text-gray-500"> {{ post.content | striptags | slice:":150"}}
-                                                </p>
-                                          </a>
-                                    </div>
-
-                              </div>
-                        </div>
-{% endfor %}
-      
-                  </div>
-            </div>
-      </div>
-
- -->
-
-<!-- Background color split screen for large screens -->
-<div class="fixed top-0 left-0 h-full w-1/2 bg-white" aria-hidden="true"></div>
-<div class="fixed top-0 right-0 h-full w-1/2 bg-gray-50" aria-hidden="true"></div>
-<div class="relative flex min-h-screen flex-col">
-  
-  <!-- Navbar -->
-  <nav class="flex-shrink-0 bg-indigo-600">
-    <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
-        <!-- Logo section -->
-        <div class="flex items-center px-2 lg:px-0 xl:w-64">
-          <div class="flex-shrink-0">
-            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300" alt="Your Company">
+          </a>
           </div>
-        </div>
 
-        <!-- Search section -->
-        <div class="flex flex-1 justify-center lg:justify-end">
-          <div class="w-full px-2 lg:px-6">
-            <label for="search" class="sr-only">Search posts</label>
-            <div class="relative text-indigo-200 focus-within:text-gray-400">
-              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <!-- Heroicon name: mini/magnifying-glass -->
-                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                </svg>
+          <!-- Search section -->
+          <div class="flex flex-1 justify-center lg:justify-end">
+            <div class="w-full px-2 lg:px-6">
+              <label for="search" class="sr-only">Search posts</label>
+              <div
+                class="border border-1.5  border-gray-300 rounded-md relative text-gray-500 focus-within:text-gray-400">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <!-- Heroicon name: mini/magnifying-glass -->
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                    aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <form class="flex w-full md:ml-0" action="{% url 'posts' %}" method="GET">
+                  <input id="search" name="search"
+                    class="block w-full rounded-md border border-transparent bg-white-400 bg-opacity-25 py-2 pl-10 pr-3 leading-5 text-gray-100 placeholder-gray-500 focus:bg-white focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
+                    placeholder="Search posts" type="search">
+                </form>
               </div>
-              <form class="flex w-full md:ml-0" action="{% url 'posts' %}" method="GET">
-              <input id="search" name="search" class="block w-full rounded-md border border-transparent bg-indigo-400 bg-opacity-25 py-2 pl-10 pr-3 leading-5 text-indigo-100 placeholder-indigo-200 focus:bg-white focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm" placeholder="Search posts" type="search">
-              </form>
             </div>
           </div>
-        </div>
-        <div class="flex lg:hidden">
-          <!-- Mobile menu button -->
-          <button type="button" class="inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-400 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600" aria-controls="mobile-menu" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <!--
-              Icon when menu is closed.
-
-              Heroicon name: outline/bars-3-center-left
-
-              Menu open: "hidden", Menu closed: "block"
-            -->
-            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <div class="flex lg:hidden">
+            <!-- Mobile menu button -->
+            <button
+            type="button"
+            id="mobile-menu-button"
+            class="inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-400 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <!-- Icon for when the menu is closed -->
+            <svg
+              class="block h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
             </svg>
-            <!--
-              Icon when menu is open.
-
-              Heroicon name: outline/x-mark
-
-              Menu open: "block", Menu closed: "hidden"
-            -->
-            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <!-- Icon for when the menu is open -->
+            <svg
+              class="hidden h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-        </div>
-        <!-- Links section -->
-        <div class="hidden lg:block lg:w-80">
-          <div class="flex items-center justify-end">
-            <div class="flex">
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-indigo-200 hover:text-white">Documentation</a>
-              <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-indigo-200 hover:text-white">Support</a>
-            </div>
-            <!-- Profile dropdown -->
-            <div class="relative ml-4 flex-shrink-0">
-              <div>
-                <button type="button" class="flex rounded-full bg-indigo-700 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                  <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80" alt="">
-                </button>
+          
+          </div>
+          <!-- Links section -->
+          <div class="hidden lg:block lg:w-80">
+            <div class="flex items-center justify-end">
+              <div class="flex">
+                <a href="{% url 'createpost' %}"
+                  class="flex items-center justify-center rounded-full bg-indigo-600 p-1 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <!-- Heroicon name: outline/plus -->
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                </a>
               </div>
 
-              <!--
-                Dropdown menu, show/hide based on menu state.
+              <!-- Profile dropdown -->
+              <div class="relative ml-4 flex-shrink-0">
+                <div>
+                  <button type="button"
+                    class="flex rounded-full bg-indigo-700 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
+                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                    <span class="sr-only">Open user menu</span>
+                    <img class="h-8 w-8 rounded-full"
+                      src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
+                      alt="">
+                  </button>
+                </div>
 
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->
-              <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <!-- Active: "bg-gray-100", Not Active: "" -->
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">View Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</a>
+
+                <!-- Dropdown menu -->
+                <div
+                  class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  id="user-menu" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                  tabindex="-1">
+                  <a href="/profile1" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                    id="user-menu-item-0">View Profile</a>
+                  <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                    id="user-menu-item-2">Logout</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </nav>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="lg:hidden" id="mobile-menu">
-      <div class="px-2 pt-2 pb-3">
-        <a href="#" class="block rounded-md bg-indigo-800 px-3 py-2 text-base font-medium text-white">Trending</a>
-        <a href="#" class="mt-1 block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-600 hover:text-indigo-100">Support</a>
-      </div>
-      <div class="border-t border-indigo-800 pt-4 pb-3">
-        <div class="px-2">
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-600 hover:text-indigo-100">Your Profile</a>
-          <a href="#" class="mt-1 block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-600 hover:text-indigo-100">Settings</a>
-          <a href="#" class="mt-1 block rounded-md px-3 py-2 text-base font-medium text-indigo-200 hover:bg-indigo-600 hover:text-indigo-100">Sign out</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+    <!-- 3 column wrapper -->
+    <div class="mx-auto w-full max-w-7xl flex-grow lg:flex xl:px-8">
+      <!-- Left sidebar & main wrapper -->
+      <div class="min-w-0 flex-1 bg-white xl:flex">
+        <div id="mobile-menu" 
+          class="hidden md:block border-b border-gray-200 bg-white xl:w-64 xl:flex-shrink-0 xl:border-b-0 xl:border-r xl:border-gray-200">
+          <div class="h-full py-6 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-0">
+            <!-- Start left column area -->
+            <div class="relative h-full" style="min-height: 12rem">
+              <!-- <div class="absolute inset-0 rounded-lg border-2 border-dashed border-gray-200"></div> -->
 
-  <!-- 3 column wrapper -->
-  <div class="mx-auto w-full max-w-7xl flex-grow lg:flex xl:px-8">
-    <!-- Left sidebar & main wrapper -->
-    <div class="min-w-0 flex-1 bg-white xl:flex">
-      <div class="border-b border-gray-200 bg-white xl:w-64 xl:flex-shrink-0 xl:border-b-0 xl:border-r xl:border-gray-200">
-        <div class="h-full py-6 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-0">
-          <!-- Start left column area -->
-          <div class="relative h-full" style="min-height: 12rem">
-            <!-- <div class="absolute inset-0 rounded-lg border-2 border-dashed border-gray-200"></div> -->
+              <!-- Navbar -->
+              <nav class="sticky top-0 mt-2 flex-1" aria-label="Sidebar">
+                <div class="space-y-1 mt-1 px-2">
+                  <!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                  <a href="posts?sort=recent"
+                    class=" text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <svg href="posts?sort=recent" class="text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    Recent
+                  </a>
 
-            
-                        <nav class="sticky top-0 mt-5 flex-1" aria-label="Sidebar">
-                          <div class="space-y-1 mt-1 px-2">
-                            <!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-                            <a href="#" class="bg-gray-200 text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                              <!--
-                                Heroicon name: outline/home
-              
-                                Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
-                              -->
-                              <svg class="text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                              </svg>
-                              Trending
-                            </a>
-              
-                            <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                              <!-- Heroicon name: outline/calendar -->
-                              <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                              </svg>
-                              Top 10
-                            </a>
-              
-                            <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                              <!-- Heroicon name: outline/user-group -->
-                              <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                              </svg>
-                              Social
-                            </a>
-              
-                            <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                              <!-- Heroicon name: outline/magnifying-glass-circle -->
-                              <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              Music
-                            </a>
-              
-                            <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                              <!-- Heroicon name: outline/megaphone -->
-                              <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
-                              </svg>
-                              Sports
-                            </a>
-              
-                            <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                              <!-- Heroicon name: outline/map -->
-                              <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-                              </svg>
-                              Technology
-                            </a>
-                          </div>
-                        </nav>
+                  <a href="posts?sort=top10"
+                    class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                    </svg>
+                    Top 10
+                  </a>
+
+                  <a href="posts?category=social"
+                    class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <!-- Heroicon name: outline/user-group -->
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                    Social
+                  </a>
+
+                  <a href="posts?category=music"
+                    class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <!-- Heroicon name: outline/magnifying-glass-circle -->
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Music
+                  </a>
+
+                  <a href="posts?category=sport"
+                    class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <!-- Heroicon name: outline/megaphone -->
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                    </svg>
+                    Sports
+                  </a>
+
+                  <a href="posts?category=technology"
+                    class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <!-- Heroicon name: outline/map -->
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+                    </svg>
+                    Technology
+                  </a>
+
+
+                  <a href="/bookmarks" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" id="user-menu-item-2">
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                    </svg>
+                    
+                    Bookmarks</a>
+
+                  <a href="/profile1" class="md:hidden text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" id="user-menu-item-0">
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>                    
+                     View Profile</a>
+                    
+                  <a href="/logout" class="md:hidden text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md" id="user-menu-item-2">
+                    <svg class="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                    </svg>
+                    Logout</a>
+
+                </div>
+              </nav>
+
+            </div>
           </div>
-          <!-- End left column area -->
         </div>
-      </div>
 
+        <!-- All posts here -->
+        <div class="bg-white lg:min-w-0 lg:flex-1">
+          <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
+            <!-- Start main area-->
+            <div class="relative h-full" style="min-height: 36rem">
+              <!-- <div class="absolute inset-0 rounded-lg border-2 border-dashed border-gray-200"></div> -->
 
+              <div class="mx-auto mt-4 grid max-w-lg gap-5 lg:max-w-none">
 
-      <!-- All posts here -->
-      <div class="bg-white lg:min-w-0 lg:flex-1">
-        <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
-          <!-- Start main area-->
-          <div class="relative h-full" style="min-height: 36rem">
-            <!-- <div class="absolute inset-0 rounded-lg border-2 border-dashed border-gray-200"></div> -->
-      
-        <div class="mx-auto mt-4 grid max-w-lg gap-5 lg:max-w-none">
-      
-          {% if posts %}
-            {% for post in posts %}
+                {% if posts %}
+                {% for post in posts %}
 
                 <div class="flex flex-col lg:flex-row overflow-hidden rounded-lg shadow-inner border-[1.5px]">
                   <div class="flex-shrink-0">
-                    <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80" alt="">
+                    <img class="h-48 w-full object-cover"
+                      src="{{ post.thumbnail_url  }}"
+                      alt="">
                   </div>
                   <div class="flex flex-1 flex-col lg:flex-row justify-between bg-white p-4 lg:p-6 md:p-6">
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-indigo-600">
-                              <a href="" class="flex justify-between">
-                                   <span class="hover:underline"> {{ post.category }} • {{ post.time_to_read }} min <span class="hidden md:inline lg:inline">to read</span> </span>
-                                   <span>{{ post.publish_date|date:"F j, Y" }}</span>
-                              </a>
-                        </p>
-                        <a href="{% url 'post' post.id %}" class="mt-2 block">
-                              <p class="my-1 text-xl font-semibold text-gray-900">{{ post.title }} </p>
-                              <p class="mt-1">
-                                {% for tag in post.tags.all %}
-                                <span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800"> {{ tag }}</span>
-                                {% endfor %}
-                              </p>
-                              <p class="mt-3 text-base text-gray-500"> {{ post.content | clean_text }} </p>
+                      <p class="text-sm font-medium text-indigo-600">
+                        <a href="" class="flex justify-between">
+                          <span class="hover:underline"> {{ post.category }} • {{ post.time_to_read }} min <span
+                              class="hidden md:inline lg:inline">to read</span> </span>
+                          <span>{{ post.publish_date|date:"F j, Y" }}</span>
                         </a>
+                      </p>
+                      <a href="{% url 'post' post.id %}" class="mt-2 block">
+                        <p class="my-1 text-xl font-semibold text-gray-900">{{ post.title }} </p>
+                        <p class="mt-1">
+                          {% for tag in post.tags.all %}
+                          <span
+                            class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800">
+                            {{ tag }}</span>
+                          {% endfor %}
+                        </p>
+                        <p class="mt-3 text-base text-gray-500"> {{ post.content | clean_text }} </p>
+                      </a>
                     </div>
                   </div>
                 </div>
 
-            {% endfor %}
-            {% else %}
-            <p class="my-1 text-xl text-center font-semibold text-gray-900"> No Posts ! </p>
-            {% endif %}
+                {% endfor %}
+                {% else %}
+                <p class="my-1 text-xl text-center font-semibold text-gray-900"> No Posts ! </p>
+                {% endif %}
+              </div>
             </div>
+            <!-- End main area -->
           </div>
-          <!-- End main area -->
         </div>
       </div>
-    </div>    
+    </div>
   </div>
-</div>
 
-      
-    
 
-</body>
 
-</html>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const userMenuButton = document.getElementById('user-menu-button');
+      const userMenu = document.getElementById('user-menu');
+  
+      userMenuButton.addEventListener('click', function () {
+        if (userMenu.classList.contains('hidden')) {
+          userMenu.classList.remove('hidden');
+        } else {
+          userMenu.classList.add('hidden');
+        }
+      });
+  
+    });
+  </script>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+  
+      mobileMenuButton.addEventListener('click', function () {
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'true');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+        }
+      });
+  
+    });
+  </script>
+  
+  </body>
+  </html>
+ 

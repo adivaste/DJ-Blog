@@ -16,6 +16,8 @@ class Post(models.Model):
       time_to_read = models.IntegerField(default=0)
       tags = models.ManyToManyField('Tag', related_name='post_set', null=True, blank=True)
       category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
+      thumbnail_url = models.URLField(blank=True, null=True, default='https://www.spectraresearch.com/wp-content/uploads/2022/09/default-image.jpg')
+
 
       def __str__(self):
             return str(self.title)
