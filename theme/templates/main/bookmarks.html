@@ -50,23 +50,17 @@
   <div class="flex flex-1 flex-col overflow-hidden">
     <header class="w-full">
       <div class="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow-sm">
-        <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
-          <span class="sr-only">Open sidebar</span>
-          <!-- Heroicon name: outline/bars-3-bottom-left -->
-          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-          </svg>
-        </button>
+        
         <div class="flex flex-1 justify-between px-4 sm:px-6">
           <a href="{% url 'posts' %}" class="logo py-5 text-xl text-indigo-500 font-semibold"> <i class="fa-solid fa-pen-nib"></i> BZ </a> 
           <div class="flex flex-1">
-            <p class="py-5 pl-6 text-lg font-semibold"> {{ author.user.first_name }} {{ author.user.last_name }}'s Profile </p>
+            <p class="py-5 pl-6 text-lg font-semibold"> {{ author.user.first_name }}'s Profile </p>
           </div>
           <div class="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
             <!-- Profile dropdown -->
             <div class="relative flex-shrink-0">
               <div>
-                <a type="button" href="{% url 'logout' %}" class="flex bg-white text-sm text-gray-400 hover:text-slate-700" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+            <a type="button" href="{% url 'logout' %}" class="flex bg-white text-sm text-gray-400 hover:text-slate-700" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <p class="cursor-pointer text-base"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</p> </a>
               </div>
 
@@ -101,7 +95,7 @@
           <div class="w-24 h-24 mx-auto"><img class="border-gray-300 border rounded-full w-24 h-24" src="{{ author.profile_pic.url }}" alt=""></div>
 
             <div class="pt-4 pb-0.5 font-semibold px-1 text-lg font-sans mx-auto">{{ author.user.first_name }} {{ author.user.last_name }}</div>
-            <div class="pb-1 px-1 text-base font-sans text-gray-500 mx-auto"> 19 Year's old • {{ author.followers.count }} Followers </div>
+            <div class="pb-1 px-1 text-base font-sans text-gray-500 mx-auto"> {{ age }} Year's old • {{ author.followers.count }} Followers </div>
             <div class="pb-1 px-1 text-base font-sans text-gray-700 mx-auto cursor-pointer">{{ author.user.email }} </div>
 
             <div class="pb-1 pt-2 px-1 text-base font-sans text-gray-600 mx-auto text-center"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid ratione accusamus dolore, molestias aliquam odio adipisci maxime libero eius ipsum?</div>
@@ -112,15 +106,14 @@
               <dl class="grid grid-rows-1 gap-2 sm:grid-rows-1">
                 <div class="overflow-hidden rounded-lg bg-white px-4 py-3">
                   <dt class="truncate text-sm text-center font-medium text-gray-500">Total Posts</dt>
-                  <dd class="mb-3 text-2xl font-semibold text-center tracking-tight text-gray-900"> 45 </dd>
+                  <dd class="mb-3 text-2xl font-semibold text-center tracking-tight text-gray-900"> {{ total_posts  }} </dd>
                   <dt class="truncate text-sm text-center font-medium text-gray-500">Total Likes</dt>
-                  <dd class="mb-3 text-2xl font-semibold text-center tracking-tight text-gray-900"> 432</dd>
+                  <dd class="mb-3 text-2xl font-semibold text-center tracking-tight text-gray-900"> {{ total_likes  }}</dd>
                   <dt class="truncate text-sm text-center font-medium text-gray-500">Total Views</dt>
-                  <dd class="mb-3 text-2xl font-semibold text-center tracking-tight text-gray-900">56,971</dd>
+                  <dd class="mb-3 text-2xl font-semibold text-center tracking-tight text-gray-900"> {{ total_views  }} </dd>
                 </div>
               </dl>
             </div>
-            
 
 
 
@@ -134,13 +127,13 @@
                 {% if bookmarks %}
                     {% for bookmark in bookmarks %}
                         <div class="flex flex-col lg:flex-row overflow-hidden rounded-lg shadow-inner border-[1.5px]">
-                            <div class="flex-shrink-0">
-                                <img class="h-48 w-full object-cover" src="{{ bookmark.thumbnail_url }}" alt="">
-                            </div>
+                          <div class="flex-shrink-0 md:w-3/12 overflow-hidden">
+                            <img class="h-48 w-full object-cover" src="{{ bookmark.thumbnail_url }}" alt="">
+                          </div>
                             <div class="flex flex-1 flex-col lg:flex-row justify-between bg-white p-4 lg:p-6 md:p-6">
                                 <div class="flex-1">
                                     <p class="text-sm font-medium text-indigo-600">
-                                        <a href="#" class="flex justify-between">
+                                        <a href="{% url 'post' bookmark.id %}" class="flex justify-between">
                                             <span class="hover:underline">{{ bookmark.category }} • {{ bookmark.time_to_read }} min <span class="hidden md:inline lg:inline">to read</span></span>
                                             <span>{{ bookmark.publish_date|date:"F j, Y" }}</span>
                                         </a>

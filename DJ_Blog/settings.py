@@ -44,13 +44,13 @@ SOCIALACCOUNT_PROVIDERS = {
     "google" : {
         "SCOPE" : [
             "profile",
-            "email"
         ],
         "AUTH_PARAMS" : {"access_type" : "online"}
     }
 }
 
 SITE_ID = 2
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [

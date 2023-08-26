@@ -71,9 +71,9 @@
                   class="flex rounded-full bg-indigo-700 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
                   id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
-                    alt="">
+                  <img class="h-8 w-8 rounded-full object-cover"
+                  src="{{ author.profile_pic.url }}"
+                  alt="">
                 </button>
               </div>
 
@@ -83,9 +83,9 @@
                 class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 id="user-menu" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                 tabindex="-1">
-                <a href="/profile1" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                   id="user-menu-item-0">View Profile</a>
-                <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                   id="user-menu-item-2">Logout</a>
               </div>
 
@@ -133,7 +133,7 @@
                                                       decoding="async">
                                                 <div class="text-sm leading-4">
                                                       <div class="text-black-400 text-base"> {{ post.author.user.first_name }}  {{ post.author.user.last_name }} </div>
-                                                      <div ><a href="https://twitter.com/adamwathan"
+                                                      <div ><a href=""
                                                                   class="text-sky-500 text-base"> {{ post.publish_date | date:'F j, Y'  }} • {{ post.time_to_read }} min read </a>
                                                       </div>
                                                 </div>
@@ -238,7 +238,7 @@
 
         <div class="p-6 flex flex-col">
           <div class="w-24 h-24"><img class="border-gray-300 border rounded-full w-24 h-24" src="{{ post.author.profile_pic.url }}" alt=""></div>
-            <div class="pt-4 pb-0.5 font-semibold px-1 text-lg font-sans">{{ post.author.user.first_name }} Rao {{ post.author.user.last_name }}</div>
+            <div class="pt-4 pb-0.5 font-semibold px-1 text-lg font-sans">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</div>
             <div class="pb-1 px-1 text-base font-sans text-gray-400"> 945 Followers </div>
             <div class="pb-1 pt-2 px-1 text-base font-sans text-gray-600"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid ratione accusamus dolore, molestias aliquam odio adipisci maxime libero eius ipsum? </div>
             <div class="flex px-1 pt-4">

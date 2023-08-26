@@ -41,7 +41,7 @@
         <div class="relative flex h-16 items-center justify-between">
           <!-- Logo section -->
           <div class="flex items-center px-2 lg:px-0 xl:w-64">
-            <a href="/posts">
+            <a href="{% url 'posts' %}">
             <div class="flex items-center">
                 <img class="h-8 w-auto" src="https://i.ibb.co/MSnmgN2/image.png" alt="Your Company">
                 <span class="text-xl font-bold text-gray-800 px-2">BlogVista</span>
@@ -129,9 +129,16 @@
                     class="flex rounded-full bg-indigo-700 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span class="sr-only">Open user menu</span>
-                    <img class="h-8 w-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
-                      alt="">
+                    <img class="h-8 w-8 rounded-full object-cover"
+                    src="
+                    {% if user.is_authenticated %}
+                      {{ author.profile_pic.url }}
+                    {% else %}
+                      https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1931&q=80
+                    {% endif %}
+                    "
+                    alt="">
+                   
                   </button>
                 </div>
 
@@ -141,9 +148,9 @@
                   class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   id="user-menu" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                   tabindex="-1">
-                  <a href="/profile1" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                  <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-0">View Profile</a>
-                  <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                  <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-2">Logout</a>
                 </div>
               </div>
@@ -159,7 +166,7 @@
       <div class="min-w-0 flex-1 bg-white xl:flex">
         <div id="mobile-menu" 
           class="hidden md:block border-b border-gray-200 bg-white xl:w-64 xl:flex-shrink-0 xl:border-b-0 xl:border-r xl:border-gray-200">
-          <div class="h-full py-6 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-0">
+          <div class="h-full pb-6 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-0">
             <!-- Start left column area -->
             <div class="relative h-full" style="min-height: 12rem">
               <!-- <div class="absolute inset-0 rounded-lg border-2 border-dashed border-gray-200"></div> -->
@@ -264,7 +271,7 @@
 
         <!-- All posts here -->
         <div class="bg-white lg:min-w-0 lg:flex-1">
-          <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
+          <div class="h-full pb-6 px-4 sm:px-6 lg:px-8">
             <!-- Start main area-->
             <div class="relative h-full" style="min-height: 36rem">
               <!-- <div class="absolute inset-0 rounded-lg border-2 border-dashed border-gray-200"></div> -->
@@ -274,8 +281,8 @@
                 {% if posts %}
                 {% for post in posts %}
 
-                <div class="flex flex-col lg:flex-row overflow-hidden rounded-lg shadow-inner border-[1.5px]">
-                  <div class="flex-shrink-0">
+                <div class="flex w-full flex-col lg:flex-row overflow-hidden rounded-lg shadow-inner border-[1.5px]">
+                  <div class="flex-shrink-0 md:w-3/12 overflow-hidden">
                     <img class="h-48 w-full object-cover"
                       src="{{ post.thumbnail_url  }}"
                       alt="">

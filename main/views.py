@@ -6,21 +6,45 @@ from main.models import Post, Comment, Tag, Author, Category
 from main.utils import calculate_time_to_read
 from django.contrib.auth.models import User
 from utils.extractImageFromContent import extract_Images_From_Content
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+
+
 
 def home(request):
     context = {}
     return render(request, 'main/home.html', context)
 
+@login_required
 def profile(request):
-    posts = Post.objects.filter(author__user=request.user.id)
-    author = Author.objects.get(user=request.user.id)
-    return render(request, 'main/profile.html', {'posts': posts, 'author': author})
+    user = request.user
+    author = Author.objects.get(user=user)
+    posts = Post.objects.filter(author=author)
+    
+    total_posts = posts.count()
+    total_likes = sum([post.likes.count() for post in posts])
+    total_views = sum([post.views for post in posts])
+    
+    today = datetime.today()
+    age = today.year - author.dob.year - ((today.month, today.day) < (author.dob.month, author.dob.day))
+    
+    context = {
+        'posts': posts,
+        'author': author,
+        'total_posts': total_posts,
+        'total_likes': total_likes,
+        'total_views': total_views,
+        'age': age,
+    }
+    
+    return render(request, 'main/profile.html', context)
 
 def authorProfile(request, id):
     posts = Post.objects.filter(author__user=id)
     author = Author.objects.get(user=id)
     return render(request, 'main/profile.html', {'posts': posts, 'author': author})
 
+@login_required
 def post(request, id):
     if request.method == 'POST':
         modifiedPostRequest = request.POST.copy()
@@ -30,7 +54,10 @@ def post(request, id):
 
         if form.is_valid():
             form.save()
+            return HttpResponseRedirect("/posts")
 
+    user = request.user
+    author = Author.objects.get(user=user.id)
     post = get_object_or_404(Post, pk=id)
     comments = Comment.objects.filter(post=id, parent=None)
     comment_form = CommentForm
@@ -42,8 +69,9 @@ def post(request, id):
     isLiked = post.likes.filter(user=user).exists()
     isFavorited = Author.objects.get(user=user).favorites.filter(id=id).exists()
 
-    return render(request, 'main/post.html', {'id': id, 'post': post, 'comments': comments, "comment_form": comment_form, "isLiked": isLiked, "isFavorited": isFavorited})
+    return render(request, 'main/post.html', {'id': id, 'post': post, 'comments': comments, "comment_form": comment_form, "isLiked": isLiked, "isFavorited": isFavorited, "author" : author})
 
+@login_required
 def like(request, id):
     post = get_object_or_404(Post, pk=id)
     liked = post.likes.filter(user=request.user.id).exists()
@@ -58,6 +86,7 @@ def like(request, id):
     else:
         return HttpResponse("Internal Error")
 
+@login_required
 def favorite(request, id):
     userObj = get_object_or_404(Author, user=request.user.id)
     isFavorited = userObj.favorites.filter(pk=id).exists()
@@ -72,7 +101,13 @@ def favorite(request, id):
     else:
         return HttpResponse("Internal Error")
 
+
 def posts(request):
+    user = request.user
+    try:
+        author = Author.objects.get(user=user)
+    except:
+        author = None
     query = request.GET.get('search')
     category = request.GET.get('category')
     sort_by = request.GET.get('sort')
@@ -97,6 +132,7 @@ def posts(request):
     
 
     context = {
+        'author' : author,
         'posts': posts,
         'selected_category': category,
         'selected_sort': sort_by,
@@ -105,6 +141,7 @@ def posts(request):
     return render(request, 'main/posts.html', context)
 
 
+@login_required
 def createpost(request):
     if request.method == 'POST':
         post_data = request.POST.copy()
@@ -156,14 +193,15 @@ def user_login(request):
             user = authenticate(username=uname, password=upass)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect("/createpost")
+                return HttpResponseRedirect("/posts")
     form = AuthenticationForm()
     return render(request, 'main/login.html', {'form': form})
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect("/login")
+    return HttpResponseRedirect("/accounts/login")
 
+@login_required
 def bookmarks(request):
     posts = Post.objects.filter(author__user=request.user.id)
     author = Author.objects.get(user=request.user.id)
@@ -171,11 +209,22 @@ def bookmarks(request):
     user = request.user  
     author = Author.objects.get(user=user)
     bookmarks = author.favorites.all()
-
+    
+    total_posts = posts.count()
+    total_likes = sum([post.likes.count() for post in posts])
+    total_views = sum([post.views for post in posts])
+    
+    today = datetime.today()
+    age = today.year - author.dob.year - ((today.month, today.day) < (author.dob.month, author.dob.day))
+    
     context = {
+        'author': author,
+        'total_posts': total_posts,
+        'total_likes': total_likes,
+        'total_views': total_views,
+        'age': age,
         'bookmarks': bookmarks,
         'posts': posts, 
-        'author': author
     }
 
     return render(request, 'main/bookmarks.html', context)

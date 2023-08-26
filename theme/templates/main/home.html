@@ -1,17 +1,50 @@
-{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Home</title>
-      {% tailwind_css %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Blog Hero Section</title>
 </head>
-<body>
-      <h1 class="text-red-500">Hello world!</h1>
-      <a style="color:black" href="http://localhost:8000/accounts/login">Login</a>
-      <a style="color:black" href="http://localhost:8000/accounts/logout">Logout</a>
+<body class="bg-white h-screen ">
+
+  <header class="text-gray-700">
+    <div class="border container mx-auto py-2">
+      <nav class="flex items-center justify-between">
+       <div class="mx-4">
+            <a href="/">
+                  <div class="py-2 flex justify-center items-center">
+                    <img class="h-8 w-auto" src="https://i.ibb.co/MSnmgN2/image.png" alt="Your Company">
+                    <span class="text-xl font-bold text-gray-800 px-2">BlogVista</span>
+                  </div>
+            </a>
+       </div>
+        <ul class="flex space-x-4 px-4">
+          <li><a href="#" class="hover:text-gray-900">Home</a></li>
+          <li><a href="#" class="hover:text-gray-900">About</a></li>
+          <li><a href="#" class="hover:text-gray-900">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="h-full bg-white-800 text-black my-16">
+    <div class="container mx-auto text-center">
+      <h1 class="text-4xl font-bold mb-4">Welcome to our Blog </h1>
+      <p class="text-lg mb-8 mx-2 md:mx-16">Discover a world of insightful articles and captivating stories on a variety of topics.  Whether you're a curious learner or an avid reader, there's something here for everyone. Start exploring our latest posts and join us on a journey of knowledge and discovery.
+            .</p>
+      <a href="/posts" class="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-full font-semibold transition duration-300">Read Our Articles</a>
+    </div>
+
+    <div class="mt-8 flex  flex-col justify-center align-center">
+          <div class="text-2xl text-center font-semibold mt-2">Join Us</div>
+          <div class="text-center mb-4 p-4">Ready to be part of our community? Choose your path:</div>
+            <div class="mx-auto">
+            <a href="/accounts/signup" class="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-full font-semibold mr-4 transition duration-300">Sign Up</a>
+            <a href="/accounts/login" class="bg-gray-500 hover:bg-gray-400 text-white px-6 py-3 rounded-full font-semibold transition duration-300">Log In</a>
+            </div>
+    </div>
+  </section>
 
 </body>
 </html>
