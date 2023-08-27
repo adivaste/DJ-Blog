@@ -167,10 +167,11 @@ def createpost(request):
                 post.thumbnail_url = thumbnail_url
 
             post.save()
-            return HttpResponse("Created!")
+            return HttpResponseRedirect("/posts")
 
         else:
             print(form.errors)
+        return HttpResponseRedirect("/posts")
 
     return render(request, 'main/createpost.html', {"form": PostForm})
 

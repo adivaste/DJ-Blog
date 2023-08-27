@@ -10,9 +10,10 @@ SECRET_KEY = "django-insecure-n1y27i(s%8y(16r1qjjdjv59py9*q8*3b+$ilt&-f!54m&f#e0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ["*", "https://sloth-electric-oriole.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://sloth-electric-oriole.ngrok-free.app",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -153,19 +154,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-if 'CODESPACE_NAME' in os.environ:
-    CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("CODESPACE_NAME")}-8000.{os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}']
-
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 LOGIN_REDIRECT_URL = "/posts"
 LOGOUT_REDIRECT_URL = "/login"
+
 # ACCOUNT_ADAPTER = 'main.account_adapter.CustomAccountAdapter'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'none'
